@@ -1,0 +1,70 @@
+---
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  class?: string;
+}
+
+const { items, class: className = '' } = Astro.props;
+---
+
+<nav aria-label="Breadcrumb Navigation" class={`my-4 sm:my-6 ${className}`}>
+  <ol
+    class="flex items-center flex-wrap gap-1.5 sm:gap-2 text-xs sm:text-sm text-slate-300"
+    itemscope
+    itemtype="https://schema.org/BreadcrumbList"
+  >
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="flex items-center">
+      <a
+        href="/"
+        class="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+        itemprop="item"
+        aria-label="Navigate to Home Page"
+      >
+        <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        </svg>
+        <span itemprop="name" class="font-medium">Home</span>
+      </a>
+      <meta itemprop="position" content="1" />
+    </li>
+
+    {
+      items.map((item, index) => {
+        const position = index + 2;
+        const isLast = index === items.length - 1;
+
+        return (
+          <li
+            class="flex items-center gap-1.5"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="https://schema.org/ListItem"
+          >
+            <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+            {item.href && !isLast ? (
+              <a
+                href={item.href}
+                class="px-2 py-1 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                itemprop="item"
+              >
+                <span itemprop="name">{item.label}</span>
+              </a>
+            ) : (
+              <span class="px-2 py-1 text-white font-semibold line-clamp-1" itemprop="name" aria-current="page">
+                {item.label}
+              </span>
+            )}
+            <meta itemprop="position" content={String(position)} />
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>

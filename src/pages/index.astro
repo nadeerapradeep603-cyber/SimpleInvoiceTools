@@ -1,0 +1,196 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolCard from '../components/ToolCard.astro';
+import Button from '../components/Button.astro';
+import AdSlot from '../components/AdSlot.astro';
+import { getDocumentGenerators, getCalculators, tools } from '../data/tools';
+
+const docGenerators = getDocumentGenerators();
+const calculators = getCalculators();
+---
+
+<BaseLayout
+  title="SimpleInvoiceTools — Free Browser-Based Business Tools & Calculators"
+  description="Free browser-based business tools — no signup, nothing stored on our servers. Generate PDF invoices, calculate taxes, estimate hourly rates, and compute margins instantly."
+>
+  <!-- Hero Section -->
+  <section class="relative pt-12 pb-16 sm:pt-20 sm:pb-24 overflow-hidden border-b border-slate-800/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      
+      <!-- Top Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs sm:text-sm font-semibold mb-6">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
+        Free browser-based business tools — no signup, nothing stored on our servers
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15] max-w-4xl mx-auto mb-6">
+        Instant Financial Utilities & <span class="gradient-text">Invoicing Tools</span>
+      </h1>
+
+      <p class="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed mb-8 sm:mb-10">
+        Generate client invoices, calculate sales tax and VAT, estimate freelancer hourly rates, and calculate profit margins entirely inside your browser.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <Button href="/tools/invoice-generator" variant="primary" size="lg">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Create Free Invoice
+        </Button>
+        <Button href="/tools" variant="secondary" size="lg">
+          View All Tools ({tools.length})
+        </Button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Top Ad Slot Banner -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <AdSlot slotId="home-top-banner" format="banner" label="ADVERTISEMENT" />
+  </div>
+
+  <!-- Grouped Tool Cards Section -->
+  <section class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    
+    <!-- Group 1: Document Generators -->
+    <div>
+      <div class="flex items-center justify-between mb-8 border-b border-slate-800 pb-4">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
+            <span class="p-2 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </span>
+            Document Generators
+          </h2>
+          <p class="text-sm text-slate-400 mt-1">
+            Create PDF invoices, price quotes, and estimate documents instantly.
+          </p>
+        </div>
+        <span class="hidden sm:inline-block text-xs font-semibold text-indigo-400 bg-indigo-950/80 px-3 py-1 rounded-full border border-indigo-800/60">
+          {docGenerators.length} Generators
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {
+          docGenerators.map((tool) => (
+            <ToolCard
+              title={tool.title}
+              description={tool.description}
+              href={`/tools/${tool.slug}`}
+              category={tool.category}
+              icon={tool.icon}
+              badge={tool.popular ? 'Popular' : undefined}
+              estimatedTime={tool.estimatedTime}
+              tags={tool.tags}
+            />
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Group 2: Calculators -->
+    <div>
+      <div class="flex items-center justify-between mb-8 border-b border-slate-800 pb-4">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
+            <span class="p-2 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400">
+              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
+            </span>
+            Calculators
+          </h2>
+          <p class="text-sm text-slate-400 mt-1">
+            Perform instant financial calculations, tax computations, and rate estimations.
+          </p>
+        </div>
+        <span class="hidden sm:inline-block text-xs font-semibold text-sky-400 bg-sky-950/80 px-3 py-1 rounded-full border border-sky-800/60">
+          {calculators.length} Calculators
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {
+          calculators.map((tool) => (
+            <ToolCard
+              title={tool.title}
+              description={tool.description}
+              href={`/tools/${tool.slug}`}
+              category={tool.category}
+              icon={tool.icon}
+              badge={tool.popular ? 'Popular' : undefined}
+              estimatedTime={tool.estimatedTime}
+              tags={tool.tags}
+            />
+          ))
+        }
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Short Trust Section -->
+  <section class="py-16 bg-slate-900/60 border-y border-slate-800/80 my-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white mb-3">
+          Built for <span class="gradient-text">Trust, Speed & Privacy</span>
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base">
+          No signups, no trackers, and zero server storage. Designed specifically for modern independent businesses.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Pillar 1: Privacy-First -->
+        <div class="p-6 rounded-2xl glass-card text-center">
+          <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Privacy-First</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            All data and invoice calculations run locally in your web browser. Nothing is ever sent to or saved on our servers.
+          </p>
+        </div>
+
+        <!-- Pillar 2: Instant -->
+        <div class="p-6 rounded-2xl glass-card text-center">
+          <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Instant Execution</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Get instant results, real-time recalculations, and rapid PDF downloads in seconds with zero loading screens.
+          </p>
+        </div>
+
+        <!-- Pillar 3: 100% Free -->
+        <div class="p-6 rounded-2xl glass-card text-center">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">100% Free Forever</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            No registration forms, subscription walls, or hidden fees. Use every tool completely free without limits.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

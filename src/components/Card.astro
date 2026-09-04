@@ -1,0 +1,9 @@
+---
+import ToolCard, { type ToolCardProps } from './ToolCard.astro';
+
+type Props = ToolCardProps;
+
+const props = Astro.props;
+---
+
+<ToolCard {...props} />

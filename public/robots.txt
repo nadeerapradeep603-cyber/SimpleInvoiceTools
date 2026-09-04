@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://simpleinvoicetools.com/sitemap-index.xml

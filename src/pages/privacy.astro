@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const breadcrumbItems = [{ label: 'Privacy Policy' }];
+---
+
+<BaseLayout
+  title="Privacy Policy — SimpleInvoiceTools"
+  description="Read our complete Privacy Policy. SimpleInvoiceTools is a 100% client-side, no-login business tools website. Learn how your data and privacy are protected."
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <div class="my-8">
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-3">
+        Privacy Policy
+      </h1>
+      <p class="text-slate-400 text-sm">Effective Date: September 4, 2026</p>
+    </div>
+
+    <div class="glass-card rounded-2xl p-6 sm:p-10 space-y-8 text-slate-300 leading-relaxed text-sm sm:text-base">
+      
+      <section class="space-y-3">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+          1. 100% Client-Side Processing & Zero Server Storage
+        </h2>
+        <p>
+          At <strong>SimpleInvoiceTools</strong>, your privacy is our core operational foundation. All web tools—including our PDF Invoice Generator, Quote Creator, VAT/Tax Calculators, Hourly Rate Calculators, and Profit Margin Calculators—run entirely within your web browser using client-side JavaScript.
+        </p>
+        <p class="p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs sm:text-sm font-medium">
+          🔒 <strong>Zero Data Transmission:</strong> None of the data you type into our tools (including your business name, client details, invoice numbers, tax rates, rates, or line items) is ever transmitted to, processed by, or saved on any remote web server.
+        </p>
+      </section>
+
+      <section class="space-y-3 border-t border-slate-800 pt-6">
+        <h2 class="text-xl font-bold text-white">2. No Account Registration or Personal Data Collection</h2>
+        <p>
+          SimpleInvoiceTools operates as a completely anonymous, no-login platform. We do not require account registration, passwords, email signups, or subscription forms to access any tool. Consequently, we do not maintain user profile databases, contact lists, or personal identifier stores.
+        </p>
+      </section>
+
+      <section class="space-y-3 border-t border-slate-800 pt-6">
+        <h2 class="text-xl font-bold text-white">3. Privacy-Focused Analytics & Performance Cookies</h2>
+        <p>
+          To monitor general website traffic, maintain site performance, and detect technical issues, we use privacy-respecting web analytics tools.
+        </p>
+        <ul class="list-disc list-inside space-y-1.5 text-slate-300 text-xs sm:text-sm">
+          <li><strong>What we collect:</strong> Aggregated, anonymous usage metrics such as total pageviews, referrer domains, device categories (mobile/desktop), and general geographic region (country level).</li>
+          <li><strong>What we NEVER collect:</strong> We never capture form inputs, client names, invoice totals, or custom numerical figures entered into calculators.</li>
+        </ul>
+      </section>
+
+      <section class="space-y-3 border-t border-slate-800 pt-6">
+        <h2 class="text-xl font-bold text-white">4. Google AdSense & Third-Party Advertising Cookies</h2>
+        <p>
+          To maintain our tools 100% free for freelancers and small businesses, we display contextual advertisements served by third-party advertising partners, including <strong>Google AdSense</strong>.
+        </p>
+        <p>
+          Google and other third-party vendors use cookies to serve ads based on a user's prior visits to our website or other websites on the internet.
+        </p>
+        <ul class="list-disc list-inside space-y-2 text-slate-300 text-xs sm:text-sm">
+          <li>Google's use of advertising cookies enables it and its partners to serve ads based on your visit to our site and/or other sites on the Internet.</li>
+          <li>Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" class="text-indigo-400 underline hover:text-indigo-300">Google Ads Settings</a>.</li>
+          <li>Alternatively, you can opt out of third-party vendor use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer" class="text-indigo-400 underline hover:text-indigo-300">www.aboutads.info</a>.</li>
+        </ul>
+      </section>
+
+      <section class="space-y-3 border-t border-slate-800 pt-6">
+        <h2 class="text-xl font-bold text-white">5. Local Browser Storage</h2>
+        <p>
+          Some tools may offer optional features to remember your recent settings (such as default currency preferences or company business details) for your convenience. This data is stored strictly in your device's browser <code class="font-mono text-xs bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 text-indigo-300">localStorage</code> and is never sent to external servers. You can clear this data at any time via your browser settings.
+        </p>
+      </section>
+
+      <section class="space-y-3 border-t border-slate-800 pt-6">
+        <h2 class="text-xl font-bold text-white">6. Updates to This Privacy Policy</h2>
+        <p>
+          We may update this Privacy Policy periodically to reflect enhancements to our web tools or regulatory updates. Any changes will be posted on this page with an updated effective date.
+        </p>
+      </section>
+
+      <section class="space-y-3 border-t border-slate-800 pt-6 text-xs text-slate-400">
+        <p>
+          If you have questions regarding this Privacy Policy, please visit our <a href="/contact" class="text-indigo-400 underline hover:text-indigo-300 font-semibold">Contact Page</a>.
+        </p>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>

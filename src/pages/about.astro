@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Button from '../components/Button.astro';
+
+const breadcrumbItems = [{ label: 'About Us' }];
+---
+
+<BaseLayout
+  title="About Us — SimpleInvoiceTools"
+  description="Learn about the mission behind SimpleInvoiceTools: providing free, client-side business utilities and PDF invoice generators built for freelancers and small businesses."
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <div class="my-8 text-center max-w-2xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold mb-4">
+        Our Story & Mission
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+        Built for <span class="gradient-text">Freelancers & Creators</span>
+      </h1>
+      <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+        SimpleInvoiceTools was created to eliminate bloated software subscriptions, mandatory account signups, and privacy concerns from daily business billing.
+      </p>
+    </div>
+
+    <!-- Main Mission Grid -->
+    <div class="space-y-8 my-10">
+      
+      <!-- Story Card -->
+      <div class="glass-card rounded-2xl p-6 sm:p-10 space-y-6 text-slate-300 text-sm sm:text-base leading-relaxed">
+        <h2 class="text-2xl font-extrabold text-white">
+          Why We Built SimpleInvoiceTools
+        </h2>
+        <p>
+          As independent developers and freelancers, we noticed a frustrating pattern with modern web software: simple daily tasks—like generating a single PDF invoice or calculating sales tax—required registering for an account, entering credit card info, or consenting to having private financial figures stored in third-party cloud databases.
+        </p>
+        <p>
+          We set out to build a lightweight alternative: a suite of professional business tools that execute <strong>100% inside your web browser</strong>. No databases, no passwords to remember, and zero risk of server data leaks.
+        </p>
+      </div>
+
+      <!-- Core Pillars -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="p-6 rounded-2xl glass-card text-center space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mx-auto">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white">100% Private</h3>
+          <p class="text-xs sm:text-sm text-slate-300">
+            All calculations and document renders happen locally in your browser memory. We never see or store your client figures.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl glass-card text-center space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center mx-auto">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white">Instant Speed</h3>
+          <p class="text-xs sm:text-sm text-slate-300">
+            Zero loading bars or dashboard sign-ins. Open the page, type your figures, and download your document in seconds.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl glass-card text-center space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white">100% Free</h3>
+          <p class="text-xs sm:text-sm text-slate-300">
+            Every calculator and document generator is free for personal and commercial use without hidden subscriptions.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="text-center pt-6">
+        <Button href="/tools" variant="primary" size="lg">
+          Explore All Free Tools
+        </Button>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

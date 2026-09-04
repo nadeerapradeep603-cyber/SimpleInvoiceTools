@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const breadcrumbItems = [{ label: 'Terms of Use' }];
+---
+
+<BaseLayout
+  title="Terms of Use — SimpleInvoiceTools"
+  description="Terms of Use for using SimpleInvoiceTools free browser-based business calculators and PDF document tools."
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <div class="my-8">
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-3">
+        Terms of Use
+      </h1>
+      <p class="text-slate-400 text-sm">Effective Date: September 4, 2026</p>
+    </div>
+
+    <div class="glass-card rounded-2xl p-6 sm:p-10 space-y-8 text-slate-300 leading-relaxed text-sm sm:text-base">
+      
+      <section class="space-y-3">
+        <h2 class="text-xl font-bold text-white">1. Acceptance of Terms</h2>
+        <p>
+          By accessing or using <strong>SimpleInvoiceTools</strong> ("we", "us", or "our platform"), you agree to be bound by these Terms of Use. If you do not agree to all terms, please discontinue using our web tools and site pages immediately.
+        </p>
+      </section>
+
+      <section class="space-y-3 border-t border-slate-800 pt-6">
+        <h2 class="text-xl font-bold text-white">2. Purpose & Use of Client-Side Tools</h2>
+        <p>
+          SimpleInvoiceTools provides free, client-side financial utilities, PDF invoice generators, VAT/tax calculators, hourly rate calculators, and project estimation tools designed for freelancers, independent contractors, and small business owners.
+        </p>
+        <p>
+          You are granted a non-exclusive, revocable, non-transferable license to use our web tools for personal and commercial business billing purposes.
+        </p>
+      </section>
+
+      <section class="space-y-3 border-t border-slate-800 pt-6">
+        <h2 class="text-xl font-bold text-white">3. Disclaimer of Financial & Tax Warranties</h2>
+        <p className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs sm:text-sm">
+          ⚠️ <strong>Educational & Operational Disclaimer:</strong> All tools, calculators, and output documents are provided on an <em>"AS IS"</em> and <em>"AS AVAILABLE"</em> basis without warranties of any kind. While we make every effort to maintain accurate mathematical formulas, SimpleInvoiceTools is not a certified public accounting firm, tax advisor, or legal counselor.
+        </p>
+        <p>
+          Users are solely responsible for verifying all invoice line calculations, local sales tax or VAT rates, and legal disclosure compliance with a qualified certified accountant or legal professional before issuing billing documents to clients.
+        </p>
+      </section>
+
+      <section class="space-y-3 border-t border-slate-800 pt-6">
+        <h2 class="text-xl font-bold text-white">4. Ownership of Generated Content</h2>
+        <p>
+          <strong>Your Generated Documents:</strong> You retain 100% full ownership of any text, company names, logos, prices, or PDF files generated through our tools. SimpleInvoiceTools claims no ownership or rights over your generated business invoices.
+        </p>
+        <p>
+          <strong>Platform Intellectual Property:</strong> The design system, code, graphics, logos, tool configurations, and branding of SimpleInvoiceTools are the exclusive intellectual property of SimpleInvoiceTools.
+        </p>
+      </section>
+
+      <section class="space-y-3 border-t border-slate-800 pt-6">
+        <h2 class="text-xl font-bold text-white">5. Limitation of Liability</h2>
+        <p>
+          To the maximum extent permitted by applicable law, SimpleInvoiceTools and its operators shall not be liable for any direct, indirect, incidental, consequential, or punitive damages resulting from your use of (or inability to use) our website or web tools, including but not limited to financial losses, tax penalties, or billing disputes with third-party clients.
+        </p>
+      </section>
+
+      <section class="space-y-3 border-t border-slate-800 pt-6 text-xs text-slate-400">
+        <p>
+          If you have questions about these Terms of Use, please visit our <a href="/contact" class="text-indigo-400 underline hover:text-indigo-300 font-semibold">Contact Page</a>.
+        </p>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>

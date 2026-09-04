@@ -1,0 +1,95 @@
+---
+const currentYear = new Date().getFullYear();
+
+const footerLinks = {
+  legal: [
+    { href: '/about', label: 'About Us' },
+    { href: '/privacy', label: 'Privacy Policy' },
+    { href: '/terms', label: 'Terms of Service' },
+    { href: '/contact', label: 'Contact Us' },
+  ],
+  popularTools: [
+    { href: '/tools/invoice-generator', label: 'PDF Invoice Generator' },
+    { href: '/tools/sales-tax-calculator', label: 'Sales Tax & VAT Calculator' },
+    { href: '/tools/hourly-rate-calculator', label: 'Hourly Rate Calculator' },
+    { href: '/tools/profit-margin-calculator', label: 'Profit Margin Calculator' },
+  ],
+};
+---
+
+<footer class="mt-auto border-t border-slate-800/80 bg-slate-950 text-slate-400 text-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      
+      <!-- Brand Overview -->
+      <div class="space-y-4 sm:col-span-2 md:col-span-1">
+        <a href="/" class="flex items-center gap-2 text-lg font-bold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-lg">
+          SimpleInvoice<span class="text-indigo-400">Tools</span>
+        </a>
+        <p class="text-xs text-slate-400 leading-relaxed max-w-xs">
+          Free, private, browser-based financial and invoicing calculators for freelancers, agencies, and small businesses.
+        </p>
+        <div class="text-xs text-slate-500 pt-2">
+          © {currentYear} SimpleInvoiceTools. All rights reserved.
+        </div>
+      </div>
+
+      <!-- Footer Required Links: About / Privacy / Terms / Contact -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-200 mb-4">
+          Company & Legal
+        </h3>
+        <ul class="space-y-2.5 text-xs">
+          {
+            footerLinks.legal.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-slate-400 hover:text-indigo-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-sm"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Quick Tool Links -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-200 mb-4">
+          Popular Tools
+        </h3>
+        <ul class="space-y-2.5 text-xs">
+          {
+            footerLinks.popularTools.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-slate-400 hover:text-indigo-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-sm"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Privacy & Client-Side Guarantee -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-200 mb-4">
+          Privacy First
+        </h3>
+        <p class="text-xs text-slate-400 leading-relaxed mb-3">
+          All financial calculations happen directly inside your web browser. No server storage or tracking.
+        </p>
+        <span class="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
+          100% Client-Side Safe
+        </span>
+      </div>
+
+    </div>
+  </div>
+</footer>

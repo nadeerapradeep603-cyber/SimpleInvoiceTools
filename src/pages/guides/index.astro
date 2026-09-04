@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import Button from '../../components/Button.astro';
+
+const breadcrumbItems = [
+  { label: 'Guides & Advice' }
+];
+
+const articles = [
+  {
+    slug: 'invoice-best-practices',
+    title: 'Essential Invoicing Best Practices for Freelancers & Agencies',
+    description: 'Learn how to construct professional invoices, establish payment terms, handle late payment fees, and get paid 2x faster.',
+    category: 'Invoicing Advice',
+    date: 'Sep 4, 2026',
+    readTime: '5 min read',
+  }
+];
+---
+
+<BaseLayout
+  title="Freelance & Business Invoicing Guides — SimpleInvoiceTools"
+  description="Actionable advice, guides, and tax strategies for freelancers, contractors, and small business owners to streamline billing and client payments."
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <!-- Page Header -->
+    <div class="my-8 text-center max-w-3xl mx-auto">
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+        Guides & <span class="gradient-text">Financial Advice</span>
+      </h1>
+      <p class="text-slate-300 text-base sm:text-lg">
+        In-depth articles and practical walkthroughs to help you master invoicing, tax calculations, and pricing strategies.
+      </p>
+    </div>
+
+    <AdSlot slotId="guides-top-banner" format="banner" label="Advertisement" />
+
+    <!-- Articles List -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-10">
+      {
+        articles.map((article) => (
+          <a
+            href={`/guides/${article.slug}`}
+            class="glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between group hover:-translate-y-1 transition-all"
+          >
+            <div>
+              <div class="flex items-center gap-3 text-xs text-slate-400 mb-3">
+                <span class="font-bold text-indigo-400 uppercase tracking-wider bg-indigo-950/60 px-2.5 py-1 rounded-full border border-indigo-800/40">
+                  {article.category}
+                </span>
+                <span>•</span>
+                <span>{article.date}</span>
+                <span>•</span>
+                <span>{article.readTime}</span>
+              </div>
+
+              <h2 class="text-xl sm:text-2xl font-bold text-white group-hover:text-indigo-300 transition-colors mb-3">
+                {article.title}
+              </h2>
+              <p class="text-sm text-slate-300 leading-relaxed mb-6">
+                {article.description}
+              </p>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs font-semibold text-indigo-400">
+              <span>Read Full Article</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

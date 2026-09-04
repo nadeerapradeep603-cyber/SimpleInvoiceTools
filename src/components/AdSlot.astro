@@ -1,0 +1,49 @@
+---
+interface Props {
+  slotId?: string;
+  format?: 'horizontal' | 'vertical' | 'rectangle' | 'banner';
+  label?: string;
+  class?: string;
+  id?: string;
+}
+
+const {
+  slotId = 'default-ad-slot',
+  format = 'horizontal',
+  label = 'ADVERTISEMENT',
+  class: className = '',
+  id,
+} = Astro.props;
+
+const formatStyles = {
+  horizontal: 'w-full min-h-[120px] my-8 sm:my-10',
+  banner: 'w-full max-w-5xl min-h-[140px] my-8 sm:my-12 mx-auto',
+  rectangle: 'w-full max-w-sm min-h-[280px] my-6',
+  vertical: 'w-full max-w-xs min-h-[400px] my-6',
+};
+---
+
+<!-- Distinct, labeled AdSlot container cleanly separated from tool functionality -->
+<aside
+  id={id}
+  class={`relative overflow-hidden rounded-2xl border-2 border-dashed border-amber-500/20 bg-slate-950/60 p-4 sm:p-6 text-center flex flex-col items-center justify-center transition-colors shadow-ad ${formatStyles[format]} ${className}`}
+  data-ad-slot={slotId}
+  aria-label="Advertisement Placeholder"
+  role="region"
+>
+  <!-- Top Visual Separator Badge (Ensures clear distinction from tool content) -->
+  <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 border border-slate-700/80 text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-2">
+    <svg class="w-3.5 h-3.5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span>{label}</span>
+  </div>
+
+  <div class="text-xs text-slate-400 font-mono">
+    Reserved Ad Space ({slotId})
+  </div>
+
+  <span class="text-[10px] text-slate-400 mt-1 block">
+    This slot is reserved for external sponsor & AdSense script integration
+  </span>
+</aside>

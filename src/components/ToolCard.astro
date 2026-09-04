@@ -1,0 +1,121 @@
+---
+export interface ToolCardProps {
+  title: string;
+  description: string;
+  href: string;
+  category?: string;
+  icon?: string;
+  badge?: string;
+  estimatedTime?: string;
+  tags?: string[];
+  class?: string;
+  id?: string;
+}
+
+type Props = ToolCardProps;
+
+const {
+  title,
+  description,
+  href,
+  category,
+  icon = 'document-text',
+  badge,
+  estimatedTime,
+  tags = [],
+  class: className = '',
+  id,
+} = Astro.props;
+
+const getIconPath = (iconName: string) => {
+  switch (iconName) {
+    case 'calculator':
+      return 'M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z';
+    case 'clock':
+      return 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z';
+    case 'chart-bar':
+      return 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z';
+    case 'exclamation-circle':
+      return 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z';
+    case 'clipboard':
+      return 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2';
+    case 'tag':
+      return 'M7 7h.01M7 3h5a1 1 0 01.707.293l7 7a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-7-7A1 1 0 013 8V4a1 1 0 011-1z';
+    case 'scale':
+      return 'M3 6l9-4 9 4M3 6v10a2 2 0 002 2h14a2 2 0 002-2V6M3 6l9 6 9-6';
+    case 'document-text':
+    default:
+      return 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z';
+  }
+};
+---
+
+<a
+  href={href}
+  id={id}
+  class={`group relative flex flex-col justify-between rounded-2xl glass-card p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${className}`}
+  aria-label={`Open tool: ${title}`}
+>
+  <div>
+    <!-- Top Metadata Header -->
+    <div class="flex items-center justify-between gap-3 mb-4">
+      <div class="flex items-center gap-3">
+        <div class="p-2.5 sm:p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 group-hover:bg-indigo-500/20 group-hover:scale-110 transition-all duration-300">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d={getIconPath(icon)} />
+          </svg>
+        </div>
+        {category && (
+          <span class="text-[11px] font-bold uppercase tracking-wider text-indigo-300 bg-indigo-950/80 border border-indigo-800/60 px-2.5 py-1 rounded-full">
+            {category}
+          </span>
+        )}
+      </div>
+
+      {badge && (
+        <span class="text-[11px] font-semibold text-amber-300 bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" aria-hidden="true"></span>
+          {badge}
+        </span>
+      )}
+    </div>
+
+    <!-- Title & Description -->
+    <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-indigo-300 transition-colors mb-2">
+      {title}
+    </h3>
+    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed line-clamp-3 mb-4">
+      {description}
+    </p>
+  </div>
+
+  <!-- Card Footer -->
+  <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+    <div class="flex items-center gap-2">
+      {estimatedTime && (
+        <span class="flex items-center gap-1 text-slate-400">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          {estimatedTime}
+        </span>
+      )}
+      {tags.length > 0 && (
+        <div class="hidden sm:flex items-center gap-1">
+          {tags.slice(0, 2).map((tag) => (
+            <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded-md text-[10px]">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <span class="inline-flex items-center gap-1 font-semibold text-indigo-400 group-hover:translate-x-1 transition-transform">
+      Use Tool
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+      </svg>
+    </span>
+  </div>
+</a>

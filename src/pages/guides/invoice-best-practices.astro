@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import Button from '../../components/Button.astro';
+
+const breadcrumbItems = [
+  { label: 'Guides & Advice', href: '/guides' },
+  { label: 'Invoicing Best Practices' },
+];
+
+const schemaArticle = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Essential Invoicing Best Practices for Freelancers & Agencies',
+  description: 'Learn how to construct professional invoices, establish payment terms, handle late payment fees, and get paid 2x faster.',
+  datePublished: '2026-09-04',
+  author: {
+    '@type': 'Organization',
+    name: 'SimpleInvoiceTools',
+  },
+};
+---
+
+<BaseLayout
+  title="Essential Invoicing Best Practices for Freelancers — SimpleInvoiceTools"
+  description="Master billing best practices, set clear payment terms, enforce late fee policies, and streamline client invoices for prompt payments."
+  schema={schemaArticle}
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <header class="my-8">
+      <div class="flex items-center gap-3 text-xs text-slate-400 mb-3">
+        <span class="font-bold text-indigo-400 uppercase tracking-wider bg-indigo-950/60 px-2.5 py-1 rounded-full border border-indigo-800/40">
+          Invoicing Advice
+        </span>
+        <span>•</span>
+        <span>Published Sep 4, 2026</span>
+        <span>•</span>
+        <span>5 min read</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-6">
+        Essential Invoicing Best Practices for Freelancers & Small Business Owners
+      </h1>
+      <p class="text-lg text-slate-300 leading-relaxed">
+        Getting paid promptly is the lifeblood of any independent business or service agency. Unclear terms, missing details, and manual processing delay payment processing times by weeks. Here are the top proven strategies to get paid on time.
+      </p>
+    </header>
+
+    <AdSlot slotId="guide-article-top" format="horizontal" label="Advertisement" />
+
+    <article class="glass-card rounded-2xl p-6 sm:p-10 space-y-8 my-8 text-slate-300 leading-relaxed">
+      
+      <section class="space-y-4">
+        <h2 class="text-2xl font-bold text-white">1. Always Include Explicit Payment Terms</h2>
+        <p>
+          Do not leave payment dates ambiguous. Instead of writing "Due Upon Receipt", specify an exact calendar date or clear terms such as <strong>Net 15</strong> or <strong>Net 30</strong>.
+        </p>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-2xl font-bold text-white">2. Itemize Deliverables and Breakdown Taxes</h2>
+        <p>
+          Break down project milestones into granular line items. Include item quantities, unit rates, and applicable taxes (GST, VAT, or local sales tax).
+        </p>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-2xl font-bold text-white">3. Utilize Automation and Client-Side Tooling</h2>
+        <p>
+          Creating invoices manually in word processors is prone to calculation errors. Using specialized invoicing web tools ensures calculated sub-totals, correct tax rates, and crisp PDF formatting.
+        </p>
+        <div class="pt-2">
+          <Button href="/tools/invoice-generator" variant="primary" size="md">
+            Try Our Free Invoice Generator
+          </Button>
+        </div>
+      </section>
+
+    </article>
+  </div>
+</BaseLayout>

@@ -1,0 +1,137 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
+  schema?: Record<string, any> | Record<string, any>[];
+}
+
+const {
+  title = 'Simple Invoice Tools — Free Business Tools & Invoicing Calculators',
+  description = 'Free, fast, and privacy-focused business tools for freelancers, agencies, and small businesses. Generate invoices, calculate VAT/taxes, estimate rates, and manage quotes.',
+  image = '/og-image.png',
+  canonicalURL = Astro.url.href,
+  schema,
+} = Astro.props;
+
+const siteName = 'SimpleInvoiceTools';
+const siteOrigin = Astro.site ? Astro.site.origin : 'https://simpleinvoicetools.com';
+
+const defaultSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteName,
+  url: siteOrigin,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${siteOrigin}/tools?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
+
+// Generate BreadcrumbList schema site-wide based on current pathname
+const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
+const breadcrumbListItems = [
+  {
+    '@type': 'ListItem',
+    position: 1,
+    name: 'Home',
+    item: `${siteOrigin}/`,
+  },
+];
+
+let currentPathAcc = '';
+pathSegments.forEach((segment, idx) => {
+  currentPathAcc += `/${segment}`;
+  const formattedName =
+    segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
+  breadcrumbListItems.push({
+    '@type': 'ListItem',
+    position: idx + 2,
+    name: formattedName,
+    item: `${siteOrigin}${currentPathAcc}`,
+  });
+});
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbListItems,
+};
+
+const passedSchemas = schema
+  ? Array.isArray(schema)
+    ? schema
+    : [schema]
+  : [];
+
+const mergedSchema = [defaultSchema, breadcrumbSchema, ...passedSchemas];
+---
+
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Simple Invoice Tools" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+    <meta property="og:site_name" content={siteName} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+    <!-- Structured Data (Schema.org) -->
+    {
+      mergedSchema.map((s) => (
+        <script type="application/ld+json" set:html={JSON.stringify(s)} />
+      ))
+    }
+  </head>
+
+  <body class="bg-neutral-950 text-neutral-50 antialiased min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+    <!-- Top Glow Grid -->
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-indigo-500/10 via-sky-500/5 to-transparent blur-3xl pointer-events-none -z-10"></div>
+
+    <!-- Reusable Header Component -->
+    <Header currentPath={Astro.url.pathname} />
+
+    <!-- Main Content Area -->
+    <main class="flex-grow">
+      <slot />
+    </main>
+
+    <!-- Reusable Footer Component -->
+    <Footer />
+  </body>
+</html>
