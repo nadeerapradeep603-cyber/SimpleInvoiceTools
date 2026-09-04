@@ -1,0 +1,103 @@
+---
+---
+
+<article class="glass-card rounded-2xl p-6 sm:p-8 space-y-8 text-slate-300">
+  <div>
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-3">
+      Mastering Sales Tax, VAT, & GST Calculations
+    </h2>
+    <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+      Value Added Tax (VAT), Goods and Services Tax (GST), and regional Sales Tax are consumption taxes levied on goods and services worldwide. Correctly distinguishing between tax-exclusive (adding tax on top of a net price) and tax-inclusive (extracting tax from a total price) is essential for accurate bookkeeping and compliance.
+    </p>
+  </div>
+
+  {/* Formula Box */}
+  <div class="p-6 rounded-2xl bg-slate-950 border border-slate-800 space-y-4">
+    <h3 class="text-xs font-bold uppercase tracking-wider text-sky-400">
+      Mathematical Formulas for Tax Calculations
+    </h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm font-mono">
+      <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+        <span class="text-sky-300 font-bold block text-[11px] uppercase">1. Add Tax (Tax-Exclusive)</span>
+        <p class="text-white font-bold">Tax Amount = Net Amount × (Tax Rate / 100)</p>
+        <p class="text-slate-400">Gross Total = Net Amount + Tax Amount</p>
+      </div>
+      <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+        <span class="text-indigo-300 font-bold block text-[11px] uppercase">2. Extract Tax (Tax-Inclusive)</span>
+        <p class="text-white font-bold">Net Amount = Gross Total / (1 + (Tax Rate / 100))</p>
+        <p class="text-slate-400">Tax Amount = Gross Total - Net Amount</p>
+      </div>
+    </div>
+  </div>
+
+  {/* Worked Numerical Example */}
+  <div class="space-y-4">
+    <h3 class="text-xl font-bold text-white">
+      Worked Numerical Example: 20% Standard UK VAT
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed">
+      Let's look at how the calculation changes depending on whether your base price includes or excludes tax:
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2 text-xs">
+        <h4 class="font-bold text-sky-400 uppercase text-[11px]">Scenario A: Add 20% VAT to £500 Net Amount</h4>
+        <div class="flex justify-between text-slate-400"><span>Net Price:</span><span class="font-mono text-slate-200">£500.00</span></div>
+        <div class="flex justify-between text-slate-400"><span>VAT (20%):</span><span class="font-mono text-sky-400">£100.00</span></div>
+        <div class="flex justify-between font-bold text-white border-t border-slate-800 pt-1.5 text-sm"><span>Gross Payable:</span><span class="font-mono">£600.00</span></div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2 text-xs">
+        <h4 class="font-bold text-indigo-400 uppercase text-[11px]">Scenario B: Extract 20% VAT from £600 Total</h4>
+        <div class="flex justify-between text-slate-400"><span>Gross Price:</span><span class="font-mono text-slate-200">£600.00</span></div>
+        <div class="flex justify-between text-slate-400"><span>Extracted Net:</span><span class="font-mono text-indigo-300">£500.00</span></div>
+        <div class="flex justify-between font-bold text-white border-t border-slate-800 pt-1.5 text-sm"><span>Tax Portion:</span><span class="font-mono text-sky-400">£100.00</span></div>
+      </div>
+    </div>
+  </div>
+
+  {/* Practical Freelance Advice */}
+  <div class="space-y-3">
+    <h3 class="text-xl font-bold text-white">
+      Tax Compliance Tips for Freelancers & Business Owners
+    </h3>
+    <ul class="list-disc list-inside space-y-2 text-sm text-slate-300 leading-relaxed">
+      <li><strong>Check Local Registration Thresholds:</strong> In the UK, VAT registration is required once turnover exceeds £90,000. In Australia, GST registration starts at A$75,000.</li>
+      <li><strong>Always Show Tax Breakdown Itemized:</strong> Tax authorities require invoices to show the net price, tax percentage, tax amount, and total gross price separately.</li>
+      <li><strong>Reverse Charge Mechanism for Cross-Border B2B:</strong> When billing business clients in other EU member states, reverse-charge rules often apply, shifting tax reporting to the recipient.</li>
+    </ul>
+  </div>
+
+  {/* Frequently Asked Questions */}
+  <div class="space-y-4 pt-4 border-t border-slate-800">
+    <h3 class="text-xl font-bold text-white">
+      Frequently Asked Questions About Sales Tax & VAT
+    </h3>
+    <div class="space-y-4 text-sm">
+      <div class="border-b border-slate-800/80 pb-3">
+        <h4 class="font-bold text-white mb-1">Why is extracting 20% tax not simply multiplying total by 0.20?</h4>
+        <p class="text-slate-400">Multiplying a gross total of £600 by 0.20 gives £120, which is incorrect. Because tax was added to the net amount (£500 × 1.20 = £600), the net amount is £600 divided by 1.20 = £500, making the actual tax portion £100.</p>
+      </div>
+
+      <div class="border-b border-slate-800/80 pb-3">
+        <h4 class="font-bold text-white mb-1">What is the standard VAT rate in major countries?</h4>
+        <p class="text-slate-400">Standard rates include: UK (20%), Germany (19%), France (20%), Australia GST (10%), Canada GST/HST (5% to 15% depending on province), and India GST (18%).</p>
+      </div>
+
+      <div class="border-b border-slate-800/80 pb-3">
+        <h4 class="font-bold text-white mb-1">What is the difference between Sales Tax and VAT?</h4>
+        <p class="text-slate-400">Sales tax is collected once at the final point of retail purchase, whereas VAT (Value Added Tax) is collected at every stage of the production and distribution supply chain.</p>
+      </div>
+
+      <div class="border-b border-slate-800/80 pb-3">
+        <h4 class="font-bold text-white mb-1">Can I use this calculator for zero-rated or exempt goods?</h4>
+        <p class="text-slate-400">Yes! Simply enter a 0% tax rate to calculate totals for zero-rated items such as essential food products, books, or exempt export services.</p>
+      </div>
+
+      <div class="pb-1">
+        <h4 class="font-bold text-white mb-1">Is this tax calculator free and private?</h4>
+        <p class="text-slate-400">Yes. SimpleInvoiceTools provides instant tax calculations in your browser with zero data logging or server transmission.</p>
+      </div>
+    </div>
+  </div>
+</article>

@@ -2,12 +2,20 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import AdSlot from '../../components/AdSlot.astro';
-import Card from '../../components/Card.astro';
 import { tools, tools as allTools, type Tool } from '../../data/tools';
 import { DocumentGeneratorIsland } from '../../components/DocumentGeneratorIsland';
 import { TaxCalculatorIsland } from '../../components/TaxCalculatorIsland';
 import { ProfitMarginCalculatorIsland } from '../../components/ProfitMarginCalculatorIsland';
+
+import InvoiceContent from '../../components/tool-content/InvoiceContent.astro';
+import QuoteContent from '../../components/tool-content/QuoteContent.astro';
+import SalesTaxContent from '../../components/tool-content/SalesTaxContent.astro';
+import HourlyRateContent from '../../components/tool-content/HourlyRateContent.astro';
 import ProfitMarginContent from '../../components/ProfitMarginContent.astro';
+import LateFeeContent from '../../components/tool-content/LateFeeContent.astro';
+import DiscountContent from '../../components/tool-content/DiscountContent.astro';
+import BreakEvenContent from '../../components/tool-content/BreakEvenContent.astro';
+
 import {
   INVOICE_CONFIG,
   QUOTE_CONFIG,
@@ -64,7 +72,71 @@ const getDocConfig = (slug: string) => {
 
 const docConfig = getDocConfig(toolData.slug);
 const isDocumentGenerator = toolData.group === 'Document Generators';
-const isProfitMarginTool = toolData.slug === 'profit-margin-calculator';
+
+// Map tool-specific FAQs for Schema.org & SEO indexing
+const toolFaqsMap: Record<string, { q: string; a: string }[]> = {
+  'invoice-generator': [
+    { q: 'What mandatory details must be on a professional invoice?', a: 'Every valid invoice must include your business name, contact info, client business details, a unique invoice ID number, issuance date, payment due date, itemized description of goods/services, subtotal, tax rate, and total amount due.' },
+    { q: 'Why should I send invoices in PDF format instead of Word or Excel?', a: 'PDFs preserve strict formatting across operating systems and devices, prevent unauthorized editing of amounts or bank details, and print cleanly for physical accounting records.' },
+    { q: 'What is the difference between Net 15, Net 30, and Due on Receipt?', a: '"Net 15" means full payment is expected within 15 calendar days from the invoice issuance date. "Net 30" extends the payment window to 30 days. "Due on Receipt" requires payment immediately upon delivery of the invoice.' },
+    { q: 'Are my client invoice details stored on your servers?', a: 'No. SimpleInvoiceTools operates 100% client-side inside your browser. Your financial figures, client names, and invoice data are never uploaded, logged, or saved to any external database.' },
+    { q: 'How can I invoice international clients in different currencies?', a: 'Our free invoice generator supports 10 global currencies (USD, EUR, GBP, AUD, CAD, JPY, INR, etc.). Simply select your target currency from the dropdown menu to format all itemized subtotals automatically.' },
+  ],
+  'quote-generator': [
+    { q: 'What is the difference between an estimate and a quote?', a: 'An estimate provides an informal price range based on preliminary details, whereas a formal quote is a fixed price offer that commits you to the specified rate once accepted by the client.' },
+    { q: 'Can I convert an accepted quote into an invoice?', a: 'Yes! SimpleInvoiceTools allows you to generate PDF quotes that match your invoice layout, making it effortless to convert approved estimates directly into final billing documents.' },
+    { q: 'How long should a business quote be valid?', a: 'Most freelancers and agencies set a 14 to 30 day validity period. This ensures you can re-negotiate pricing if project requirements or calendar availability changes before the client approves.' },
+    { q: 'Is a business quote legally binding?', a: 'Once a quote is signed or accepted via email by the client, it forms a legally binding agreement under contract law. Always include clear terms regarding project scope and revision limits.' },
+    { q: 'Are quote details private when created on this platform?', a: 'Yes. All estimate details, pricing terms, and client names are processed 100% locally inside your browser. No data is stored on our servers.' },
+  ],
+  'sales-tax-calculator': [
+    { q: 'Why is extracting 20% tax not simply multiplying total by 0.20?', a: 'Multiplying a gross total of £600 by 0.20 gives £120, which is incorrect. Because tax was added to the net amount (£500 × 1.20 = £600), the net amount is £600 divided by 1.20 = £500, making the actual tax portion £100.' },
+    { q: 'What is the standard VAT rate in major countries?', a: 'Standard rates include: UK (20%), Germany (19%), France (20%), Australia GST (10%), Canada GST/HST (5% to 15% depending on province), and India GST (18%).' },
+    { q: 'What is the difference between Sales Tax and VAT?', a: 'Sales tax is collected once at the final point of retail purchase, whereas VAT (Value Added Tax) is collected at every stage of the production and distribution supply chain.' },
+    { q: 'Can I use this calculator for zero-rated or exempt goods?', a: 'Yes! Simply enter a 0% tax rate to calculate totals for zero-rated items such as essential food products, books, or exempt export services.' },
+    { q: 'Is this tax calculator free and private?', a: 'Yes. SimpleInvoiceTools provides instant tax calculations in your browser with zero data logging or server transmission.' },
+  ],
+  'hourly-rate-calculator': [
+    { q: 'How many billable hours can a full-time freelancer realistically log per year?', a: 'Most experienced freelancers average 1,000 to 1,200 billable hours per year (approx 20–25 hours per week). The remaining time is spent on administrative tasks, client onboarding, and marketing.' },
+    { q: 'Why is a freelancer\'s hourly rate higher than an employee\'s salary hourly equivalent?', a: 'Freelancers do not receive paid vacation, health insurance, 401(k) matching, or paid sick leave from an employer. They must also pay self-employment tax and business overhead costs themselves.' },
+    { q: 'Should I publish my hourly rate publicly on my website?', a: 'Publishing a baseline rate helps filter out budget-constrained leads, but quoting custom project pricing gives you flexibility to price based on client value and scope complexity.' },
+    { q: 'What percentage should I set aside for taxes?', a: 'Freelancers in the US should generally reserve 25% to 30% of net earnings for federal income tax, state income tax, and self-employment tax (FICA).' },
+    { q: 'Is this calculation stored anywhere?', a: 'No. All income goals, expense inputs, and calculated rates remain 100% private inside your web browser.' },
+  ],
+  'profit-margin-calculator': [
+    { q: 'What is a healthy profit margin for freelancers and solo business owners?', a: 'Service-based freelancers typically aim for a 50% to 80% gross profit margin, because service businesses have lower physical inventory costs. Product-based businesses or agencies with high payroll costs usually operate around 15% to 35% net profit margins.' },
+    { q: 'What is the difference between Profit Margin and Markup?', a: 'Profit Margin measures profit as a percentage of total revenue, whereas Markup measures profit as a percentage of cost. For example, if an item costs $50 and sells for $100, the profit is $50. The profit margin is 50% ($50 / $100), but the markup is 100% ($50 / $50).' },
+    { q: 'Why does my profit margin drop when I hire subcontractors?', a: 'Subcontractor fees are direct cost items (COGS). If you pay a developer $1,000 on a $2,000 client project without increasing your overall fee, your profit drops to $1,000 and your margin shrinks from 100% to 50%. Always mark up contractor costs when building client estimates.' },
+    { q: 'Should I include my own hourly wages in the project cost?', a: 'In solo freelancing, your labor is part of your net profit draw. However, if you run a formal agency or plan to delegate tasks, you should factor labor wages into project costs so your business margin accurately reflects company profitability beyond owner pay.' },
+    { q: 'Can profit margin ever exceed 100%?', a: 'No. Because profit margin is calculated as a fraction of total revenue (Profit / Revenue), profit margin can never exceed 100%. Markup, on the other hand, can easily exceed 100% or 200% if your selling price is more than double your cost.' },
+  ],
+  'late-fee-calculator': [
+    { q: 'What is a reasonable late fee percentage for business invoices?', a: 'The most common commercial late fee rate is 1.5% per month (which equals 18% per year), or a flat fee of $25 to $50 for smaller balances.' },
+    { q: 'Can I legally charge late fees if it was not in the original contract?', a: 'In many jurisdictions, commercial law allows statutory interest even without explicit contract terms (such as the UK Commercial Debts Act). However, in the US, late fees generally require prior written notice on the original invoice or agreement.' },
+    { q: 'Should I waive a late fee if the client promises to pay immediately?', a: 'Waiving a first-time late fee as a courtesy can preserve long-term client goodwill, provided you explicitly remind the client that future late payments will incur full penalties.' },
+    { q: 'How are overdue days calculated?', a: 'Overdue days are counted starting from the day immediately following your invoice due date up to the date payment is received in full.' },
+    { q: 'Is this calculation private?', a: 'Yes. SimpleInvoiceTools processes all late fee interest computations 100% locally in your browser.' },
+  ],
+  'discount-calculator': [
+    { q: 'What does 2/10 Net 30 mean on an invoice?', a: 'It means the client receives a 2% discount if they pay the invoice within 10 days; otherwise, the full invoice amount is due within 30 days.' },
+    { q: 'Do I apply sales tax before or after the discount?', a: 'Sales tax is calculated on the discounted net price, not the original price, because sales tax is levied on the actual gross amount paid by the customer.' },
+    { q: 'How do stacked discounts work?', a: 'If a client receives a 10% volume discount plus a 5% early payment discount, apply the 10% first to get a reduced subtotal, and then apply the 5% to that reduced subtotal (yielding a total effective discount of 14.5%, not 15%).' },
+    { q: 'Can I calculate percentage savings with this tool?', a: 'Yes! Enter the original price and discount percentage to calculate exact savings and final cost instantly.' },
+    { q: 'Is my commercial data safe?', a: 'Yes. SimpleInvoiceTools operates 100% locally in your browser with zero data logging.' },
+  ],
+  'break-even-calculator': [
+    { q: 'What is a contribution margin?', a: 'Contribution margin is the selling price minus variable costs per unit. It represents the portion of sales revenue that contributes to paying off fixed overhead expenses.' },
+    { q: 'What happens when sales fall below the break-even point?', a: 'When sales volume is below break-even, total revenue is insufficient to cover fixed costs, resulting in a net financial loss for that accounting period.' },
+    { q: 'Can freelancers use break-even analysis?', a: 'Yes! Freelancers can treat their living expenses and business software costs as fixed overhead to calculate how many client hours or projects they must bill each month to break even.' },
+    { q: 'How often should a business recalculate break-even metrics?', a: 'Recalculate your break-even point whenever fixed costs change (e.g. hiring staff, renting an office) or when supplier prices shift.' },
+    { q: 'Are calculations saved online?', a: 'No. SimpleInvoiceTools executes all financial formulas 100% locally in your browser with zero remote logging.' },
+  ],
+};
+
+const toolFaqs = toolFaqsMap[toolData.slug] || [
+  { q: `Is the ${toolData.title} completely free?`, a: `Yes! SimpleInvoiceTools provides the ${toolData.title} 100% free with no registration forms or hidden fees.` },
+  { q: 'Are my business or client details saved on any server?', a: 'No data is stored or transmitted. All calculations, line item edits, and PDF creation happen 100% locally inside your web browser.' },
+];
 
 // 1. SoftwareApplication Schema.org JSON-LD
 const schemaSoftwareApp = {
@@ -81,47 +153,11 @@ const schemaSoftwareApp = {
   },
 };
 
-// 2. FAQPage Schema.org JSON-LD (Generated from page FAQs)
-const profitMarginFaqs = [
-  {
-    q: 'What is a healthy profit margin for freelancers and solo business owners?',
-    a: 'Service-based freelancers typically aim for a 50% to 80% gross profit margin, because service businesses have lower physical inventory costs. Product-based businesses or agencies with high payroll costs usually operate around 15% to 35% net profit margins.',
-  },
-  {
-    q: 'What is the difference between Profit Margin and Markup?',
-    a: 'Profit Margin measures profit as a percentage of total revenue, whereas Markup measures profit as a percentage of cost. For example, if an item costs $50 and sells for $100, the profit is $50. The profit margin is 50% ($50 / $100), but the markup is 100% ($50 / $50).',
-  },
-  {
-    q: 'Why does my profit margin drop when I hire subcontractors?',
-    a: 'Subcontractor fees are direct cost items (COGS). If you pay a developer $1,000 on a $2,000 client project without increasing your overall fee, your profit drops to $1,000 and your margin shrinks from 100% to 50%. Always mark up contractor costs when building client estimates.',
-  },
-  {
-    q: 'Should I include my own hourly wages in the project cost?',
-    a: 'In solo freelancing, your labor is part of your net profit draw. However, if you run a formal agency or plan to delegate tasks, you should factor labor wages into project costs so your business margin accurately reflects company profitability beyond owner pay.',
-  },
-  {
-    q: 'Can profit margin ever exceed 100%?',
-    a: 'No. Because profit margin is calculated as a fraction of total revenue (Profit / Revenue), profit margin can never exceed 100%. Markup, on the other hand, can easily exceed 100% or 200% if your selling price is more than double your cost.',
-  },
-];
-
-const defaultFaqs = [
-  {
-    q: `Is the ${toolData.title} completely free?`,
-    a: `Yes! SimpleInvoiceTools provides the ${toolData.title} 100% free with no registration forms or hidden fees.`,
-  },
-  {
-    q: 'Are my business or client details saved on any server?',
-    a: 'No data is stored or transmitted. All calculations, line item edits, and PDF creation happen 100% locally inside your web browser.',
-  },
-];
-
-const faqsToUse = isProfitMarginTool ? profitMarginFaqs : defaultFaqs;
-
+// 2. FAQPage Schema.org JSON-LD
 const schemaFAQPage = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqsToUse.map((faq) => ({
+  mainEntity: toolFaqs.map((faq) => ({
     '@type': 'Question',
     name: faq.q,
     acceptedAnswer: {
@@ -140,10 +176,10 @@ const toolPageSchemas = [schemaSoftwareApp, schemaFAQPage];
   schema={toolPageSchemas}
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
-    <!-- Breadcrumbs -->
+    {/* Breadcrumbs */}
     <Breadcrumbs items={breadcrumbItems} />
 
-    <!-- Tool Header -->
+    {/* Tool Header */}
     <div class="my-8">
       <div class="flex items-center gap-3 mb-3">
         <span class="text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-950/80 border border-indigo-800/60 px-3 py-1 rounded-full">
@@ -167,12 +203,12 @@ const toolPageSchemas = [schemaSoftwareApp, schemaFAQPage];
       </p>
     </div>
 
-    <!-- Main Workspace Area: Optimized Island Hydration with client:visible -->
+    {/* Main Workspace Area: Hydrated React Islands */}
     <div class="my-8 min-h-[450px]">
       {
         isDocumentGenerator ? (
           <DocumentGeneratorIsland client:visible config={docConfig} />
-        ) : isProfitMarginTool ? (
+        ) : toolData.slug === 'profit-margin-calculator' ? (
           <ProfitMarginCalculatorIsland client:visible />
         ) : (
           <TaxCalculatorIsland client:visible />
@@ -180,42 +216,32 @@ const toolPageSchemas = [schemaSoftwareApp, schemaFAQPage];
       }
     </div>
 
-    <!-- Ad Slot Below Interactive Tool -->
+    {/* Ad Slot Below Interactive Tool */}
     <AdSlot slotId={`tool-${toolData.slug}-bottom`} format="horizontal" label="ADVERTISEMENT" />
 
-    <!-- SEO Guide & FAQs -->
+    {/* SEO Rich Educational Content & Tool-Specific FAQs */}
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 my-10">
       
-      <div class="lg:col-span-2 space-y-6">
+      <div class="lg:col-span-2">
         {
-          isProfitMarginTool ? (
+          toolData.slug === 'invoice-generator' ? (
+            <InvoiceContent />
+          ) : toolData.slug === 'quote-generator' ? (
+            <QuoteContent />
+          ) : toolData.slug === 'sales-tax-calculator' ? (
+            <SalesTaxContent />
+          ) : toolData.slug === 'hourly-rate-calculator' ? (
+            <HourlyRateContent />
+          ) : toolData.slug === 'profit-margin-calculator' ? (
             <ProfitMarginContent />
+          ) : toolData.slug === 'late-fee-calculator' ? (
+            <LateFeeContent />
+          ) : toolData.slug === 'discount-calculator' ? (
+            <DiscountContent />
+          ) : toolData.slug === 'break-even-calculator' ? (
+            <BreakEvenContent />
           ) : (
-            <article class="glass-card rounded-2xl p-6 sm:p-8 space-y-6">
-              <h2 class="text-2xl font-bold text-white">
-                How to Use the {toolData.title}
-              </h2>
-              <p class="text-sm text-slate-300 leading-relaxed">
-                Managing client billing and tax calculations is essential for predictable business revenue. The <strong>{toolData.title}</strong> streamlines your workflow by eliminating spreadsheet templates and giving you immediate, precise figures directly in your browser.
-              </p>
-
-              <h3 class="text-lg font-semibold text-indigo-300">Key Benefits</h3>
-              <ul class="list-disc list-inside space-y-2 text-sm text-slate-300">
-                <li><strong>Zero Account Required:</strong> Calculate figures or create documents immediately without logging in.</li>
-                <li><strong>100% Client-Side Privacy:</strong> All client names, tax numbers, and itemized calculations stay locally in your browser.</li>
-                <li><strong>Instant Live Updates:</strong> Real-time calculations update dynamically as you type with zero submit buttons.</li>
-              </ul>
-
-              <h3 class="text-lg font-semibold text-indigo-300">Frequently Asked Questions</h3>
-              <div class="space-y-4 text-sm text-slate-300">
-                {defaultFaqs.map((faq) => (
-                  <div class="border-b border-slate-800/80 pb-3">
-                    <h4 class="font-bold text-white mb-1">{faq.q}</h4>
-                    <p class="text-slate-400">{faq.a}</p>
-                  </div>
-                ))}
-              </div>
-            </article>
+            <InvoiceContent />
           )
         }
       </div>
