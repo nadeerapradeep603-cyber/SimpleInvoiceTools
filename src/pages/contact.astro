@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const breadcrumbItems = [{ label: 'Contact Us' }];
+const formspreeEndpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT || 'https://formspree.io/f/support@simpleinvoicetools.com';
 ---
 
 <BaseLayout
@@ -43,7 +44,7 @@ const breadcrumbItems = [{ label: 'Contact Us' }];
           </div>
 
           <div class="pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-2">
-            <p className="font-semibold text-slate-300">🔒 Privacy Promise</p>
+            <p class="font-semibold text-slate-300">🔒 Privacy Promise</p>
             <p>Your email address and message details will only be used to respond to your inquiry. We never share or sell contact information.</p>
           </div>
         </div>
@@ -57,7 +58,7 @@ const breadcrumbItems = [{ label: 'Contact Us' }];
         </h2>
 
         <form
-          action="https://formspree.io/f/support@simpleinvoicetools.com"
+          action={formspreeEndpoint}
           method="POST"
           class="space-y-4"
         >

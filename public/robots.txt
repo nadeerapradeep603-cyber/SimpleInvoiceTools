@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://simpleinvoicetools.com/sitemap-index.xml
+Sitemap: https://simple-invoice-tools.vercel.app/sitemap.xml
